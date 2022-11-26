@@ -1,0 +1,22 @@
+{
+    "name": "socodo/sdk",
+    "description": "SDK component for socodo.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Socodo\\SDK\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Qroffle Inc.",
+            "email": "socodo@qroffle.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "socodo/router": "^0.0.5",
+        "codeception/codeception": "^5.0"
+    }
+}
