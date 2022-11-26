@@ -4,7 +4,7 @@ namespace Socodo\SDK\Exceptions;
 
 use RuntimeException;
 
-class TypescriptResolutionException extends RuntimeException
+class FileResolutionException extends RuntimeException
 {
 
 }

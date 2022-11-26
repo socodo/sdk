@@ -2,7 +2,7 @@
 
 namespace Socodo\SDK\Files;
 
-use Socodo\SDK\Exceptions\TypescriptResolutionException;
+use Socodo\SDK\Exceptions\FileResolutionException;
 
 class PackageJson extends FileAbstract
 {
@@ -64,7 +64,7 @@ class PackageJson extends FileAbstract
      */
     public function setFilePath (string $filePath): void
     {
-        throw new TypescriptResolutionException(static::class . '::setFilePath() Cannot set file path of PackageJson.');
+        throw new FileResolutionException(static::class . '::setFilePath() Cannot set file path of PackageJson.');
     }
 
     /**

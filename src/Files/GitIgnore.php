@@ -2,7 +2,7 @@
 
 namespace Socodo\SDK\Files;
 
-use Socodo\SDK\Exceptions\TypescriptResolutionException;
+use Socodo\SDK\Exceptions\FileResolutionException;
 
 class GitIgnore extends FileAbstract
 {
@@ -28,7 +28,7 @@ class GitIgnore extends FileAbstract
      */
     public function setFilePath (string $filePath): void
     {
-        throw new TypescriptResolutionException(static::class . '::setFilePath() Cannot set file path of GitIgnore.');
+        throw new FileResolutionException(static::class . '::setFilePath() Cannot set file path of GitIgnore.');
     }
 
     /**
