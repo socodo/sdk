@@ -11,6 +11,7 @@ use Socodo\Router\Interfaces\RouteCollectionInterface;
 use Socodo\SDK\Attributes\ExcludeSDK;
 use Socodo\SDK\Files\PackageJson;
 use Socodo\SDK\Files\GitIgnore;
+use Socodo\SDK\Files\TsConfigJson;
 use Socodo\SDK\Files\TsInterface;
 use Socodo\SDK\Files\TsNamespace;
 use Throwable;
@@ -485,6 +486,9 @@ class SDK
         $packageJson = $this->createPackageJson();
         $writer->write($packageJson);
 
+        $tsConfigJson = $this->createTsConfigJson();
+        $writer->write($tsConfigJson);
+
         $collected = $this->collect($collection);
         foreach ($collected['namespaces'] as $namespace)
         {
@@ -572,5 +576,29 @@ class SDK
         ]);
 
         return $packageJson;
+    }
+
+    /**
+     * Create a new tsconfig.json.
+     *
+     * @return TsConfigJson
+     */
+    protected function createTsConfigJson (): TsConfigJson
+    {
+        $tsConfigJson = new TsConfigJson();
+        $tsConfigJson->setData([
+            'target' => 'ES2020',
+            'lib' => [ 'ES2020' ],
+            'module' => 'Node16',
+            'moduleResolution' => 'Node16',
+            'strict' => true,
+            'esModuleInterop' => true,
+            'skipLibCheck' => true,
+            'forceConsistentCasingInFileNames' => true,
+            'declaration' => true,
+            'outDir' => './dist'
+        ]);
+
+        return $tsConfigJson;
     }
 }
