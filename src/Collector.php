@@ -22,7 +22,7 @@ class Collector
     protected string $structurePrefix = 'App\\Structures\\';
 
     /** @var string Structure super class name. */
-    protected string $structureSuper = 'Socodo\\Framework\\Spec\\Structure';
+    protected string $structureSuper = 'Socodo\\Framework\\Structure\\Structure';
 
     /** @var array Namespaces. */
     protected array $namespaces = [];
