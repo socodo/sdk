@@ -2,7 +2,6 @@
 
 namespace Socodo\SDK;
 
-use Closure;
 use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionException;
@@ -16,16 +15,45 @@ use Socodo\SDK\Attributes\ExcludeSDK;
 
 class Collector
 {
-    protected const CONTROLLER_PREFIX = 'App\\Controllers\\';
-    protected const STRUCTURE_PREFIX = 'App\\Structures\\';
+    /** @var string Controller prefix. */
+    protected string $controllerPrefix = 'App\\Controllers\\';
 
-    protected const STRUCTURE_SUPER_CLASS = 'Socodo\\Framework\\Spec\\Structure';
+    /** @var string Structure prefix. */
+    protected string $structurePrefix = 'App\\Structures\\';
+
+    /** @var string Structure super class name. */
+    protected string $structureSuper = 'Socodo\\Framework\\Spec\\Structure';
 
     /** @var array Namespaces. */
     protected array $namespaces = [];
 
     /** @var array Interfaces. */
     protected array $interfaces = [];
+
+    /**
+     * Constructor.
+     *
+     * @param string|null $controllerPrefix
+     * @param string|null $structurePrefix
+     * @param string|null $structureSuper
+     */
+    public function __construct (?string $controllerPrefix = null, ?string $structurePrefix = null, ?string $structureSuper = null)
+    {
+        if ($controllerPrefix !== null)
+        {
+            $this->controllerPrefix = $controllerPrefix;
+        }
+
+        if ($structurePrefix !== null)
+        {
+            $this->structurePrefix = $structurePrefix;
+        }
+
+        if ($structureSuper !== null)
+        {
+            $this->structureSuper = $structureSuper;
+        }
+    }
 
     /**
      * Collect from RouteCollection.
@@ -118,9 +146,9 @@ class Collector
             }
 
             $namespaceName = $class->getName();
-            if (str_starts_with($namespaceName, self::CONTROLLER_PREFIX))
+            if (str_starts_with($namespaceName, $this->controllerPrefix))
             {
-                $namespaceName = substr($namespaceName, strlen(self::CONTROLLER_PREFIX));
+                $namespaceName = substr($namespaceName, strlen($this->controllerPrefix));
             }
 
             $namespaceName = str_replace('\\', '', $namespaceName);
@@ -441,7 +469,7 @@ class Collector
         {
             $typeString = 'boolean';
         }
-        elseif (is_subclass_of($typeName, self::STRUCTURE_SUPER_CLASS))
+        elseif (is_subclass_of($typeName, $this->structureSuper))
         {
             $isNotExcluded = $this->collectStructure($typeName);
             $typeString = $isNotExcluded ? $this->getStructureInterfaceName($typeName) : 'any';
@@ -463,9 +491,9 @@ class Collector
      */
     protected function getStructureInterfaceName (string $structureClass): string
     {
-        if (str_starts_with($structureClass, self::STRUCTURE_PREFIX))
+        if (str_starts_with($structureClass, $this->structurePrefix))
         {
-            $structureClass = substr($structureClass, strlen(self::STRUCTURE_PREFIX));
+            $structureClass = substr($structureClass, strlen($this->structurePrefix));
         }
 
         return 'I' . str_replace('\\', '', $structureClass);
@@ -479,7 +507,7 @@ class Collector
      */
     protected function collectStructure (string $structureClass): bool
     {
-        if (!class_exists($structureClass) || !is_subclass_of($structureClass, self::STRUCTURE_SUPER_CLASS))
+        if (!class_exists($structureClass) || !is_subclass_of($structureClass, $this->structureSuper))
         {
             return false;
         }
