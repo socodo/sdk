@@ -28,21 +28,4 @@ abstract class FileAbstract implements FileInterface
     {
         $this->filePath = $filePath;
     }
-
-    /**
-     * Compile template string.
-     *
-     * @param string $template
-     * @param array $bindings
-     * @return string
-     */
-    protected function compileTemplate (string $template, array $bindings = []): string
-    {
-        foreach ($bindings as $key => $value)
-        {
-            $template = str_replace('%' . strtoupper($key) . '%', $value, $template);
-        }
-
-        return $template;
-    }
 }
