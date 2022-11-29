@@ -156,7 +156,7 @@ class Collector
 
             $compiled = $route->compile();
             $path = trim(array_reduce($compiled['segments'], static function (string $path, array $segment) {
-                return $path . '/' . ($segment['type'] == 'literal' ? $segment['name'] : '{' . $segment['name'] . '}');
+                return $path . '/' . ($segment['type'] == 'literal' ? $segment['name'] : '${' . $segment['name'] . '}');
             }, ''), '/');
 
             $params = $this->getParams($method);

@@ -17,6 +17,7 @@
     "require": {
         "php": "^8.1",
         "socodo/router": "^0.0.5",
-        "codeception/codeception": "^5.0"
+        "codeception/codeception": "^5.0",
+        "codeception/module-asserts": "*"
     }
 }
